@@ -14,7 +14,7 @@ Bookmark Sync requires Go to be installed on your system. You can download and i
 To install Bookmark Sync, follow these steps:
 
 1. Clone the repository:
-`git clone https://github.com/your-username/bookmark-sync.git`
+`git clone https://github.com/jonasrdl/bookmark-sync.git`
 2. Navigate to the project directory:
 `cd bookmark-sync`
 3. Build the executable:
