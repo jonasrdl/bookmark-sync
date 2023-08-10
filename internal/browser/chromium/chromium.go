@@ -1,6 +1,8 @@
 package chromium
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"github.com/jonasrdl/bookmark-sync/internal"
@@ -46,4 +48,18 @@ func (c *ChromiumBrowser) ParseJSON(path string) ([]internal.Bookmark, error) {
 	}
 
 	return data.Roots.BookmarkBar.Children, nil
+}
+
+// CalculateChecksum calculates the SHA-256 checksum for the content of a file.
+// It reads the contents of the file at the specified filePath, computes the hash,
+// and returns the checksum as a hexadecimal string.
+// If an error occurs while reading the file or computing the hash, an error is returned.
+func CalculateChecksum(path string) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+
+	hash := sha256.Sum256(data)
+	return hex.EncodeToString(hash[:]), nil
 }
