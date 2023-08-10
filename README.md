@@ -2,12 +2,11 @@
 Bookmark Sync is a command-line tool that allows you to synchronize bookmarks between different web browsers, currently supporting Chromium and Firefox.
 
 ## Table of Contents
-- Installation
-- Usage
-- Command-Line Interface
-- Syncing Process
-- Contributing
-- License 
+- [Installation](https://github.com/jonasrdl/bookmark-sync/tree/main#installation)
+- [Usage](https://github.com/jonasrdl/bookmark-sync/tree/main#usage)
+- [Command-Line Interface](https://github.com/jonasrdl/bookmark-sync/tree/main#command-line-interface)
+- [Syncing Process](https://github.com/jonasrdl/bookmark-sync/tree/main#syncing-process)
+- [Contributing](https://github.com/jonasrdl/bookmark-sync/tree/main#contributing)
 
 ### Installation
 Bookmark Sync requires Go to be installed on your system. You can download and install Go from the official website: https://golang.org/dl/
