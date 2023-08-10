@@ -3,7 +3,6 @@ package firefox
 import (
 	"bufio"
 	"errors"
-	_ "github.com/mattn/go-sqlite3"
 	"os"
 	"os/user"
 	"path/filepath"
