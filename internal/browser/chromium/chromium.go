@@ -7,9 +7,7 @@ import (
 	"path/filepath"
 )
 
-type ChromiumBrowser struct {
-	UserProfileDir string
-}
+type ChromiumBrowser struct{}
 
 func (c *ChromiumBrowser) GetBookmarksFilepath() (string, error) {
 	usr, err := user.Current()

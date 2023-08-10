@@ -14,9 +14,7 @@ import (
 TODO: sqlite has to be parsed, which is a pain in the ass
 */
 
-type FirefoxBrowser struct {
-	UserProfileDir string
-}
+type FirefoxBrowser struct{}
 
 func (f *FirefoxBrowser) GetBookmarksFilepath() (string, error) {
 	usr, err := user.Current()
