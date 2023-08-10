@@ -14,7 +14,6 @@ var rootCmd = &cobra.Command{
 	Use:   "bookmark-sync",
 	Short: "A tool to sync bookmarks between browsers",
 	Run: func(cmd *cobra.Command, args []string) {
-		// show help msg if no subcommand is provided
 		cmd.Help()
 	},
 }
@@ -51,8 +50,6 @@ func main() {
 func syncBookmarks(from, to string) {
 	var sourceBrowser, destBrowser internal.Browser
 
-	fmt.Println("PING 1")
-
 	switch from {
 	case "chromium":
 		sourceBrowser = &chromium.ChromiumBrowser{}
@@ -71,15 +68,11 @@ func syncBookmarks(from, to string) {
 		log.Fatal("Invalid destination browser specified")
 	}
 
-	fmt.Println("PING 2")
-
 	sourceBrowserFilepath, _ := sourceBrowser.GetBookmarksFilepath()
 	sourceBookmarks, err := sourceBrowser.ParseJSON(sourceBrowserFilepath)
 	if err != nil {
 		log.Fatal("error parsing source browser bookmarks:", err)
 	}
-
-	fmt.Println("PING 3")
 
 	destBrowserFilepath, _ := destBrowser.GetBookmarksFilepath()
 	destBookmarks, err := destBrowser.ParseJSON(destBrowserFilepath)
@@ -88,8 +81,6 @@ func syncBookmarks(from, to string) {
 	}
 
 	mergedBookmarks := internal.MergeBookmarks(sourceBookmarks, destBookmarks)
-
-	fmt.Println("PING 4")
 
 	if err := destBrowser.UpdateJSON(mergedBookmarks); err != nil {
 		log.Fatal("Error updating destination browser bookmarks", err)

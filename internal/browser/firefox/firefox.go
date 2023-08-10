@@ -74,21 +74,17 @@ func (f *FirefoxBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
 }
 
 func mergeBookmarks(existing, new []internal.Bookmark) []internal.Bookmark {
-	// Create a map to keep track of existing bookmarks using their GUID
 	existingMap := make(map[string]internal.Bookmark)
 	for _, bookmark := range existing {
 		existingMap[bookmark.ID] = bookmark
 	}
 
-	// Merge the new bookmarks into the existing bookmarks map
 	for _, bookmark := range new {
-		// Check if the bookmark already exists based on its GUID
 		if _, exists := existingMap[bookmark.ID]; !exists {
 			existingMap[bookmark.ID] = bookmark
 		}
 	}
 
-	// Convert the merged map back into a slice of bookmarks
 	var merged []internal.Bookmark
 	for _, bookmark := range existingMap {
 		merged = append(merged, bookmark)
@@ -209,7 +205,6 @@ func findValidProfilePath(profilesIniPath string) (string, error) {
 		return "", errors.New("default profile path not found in profiles.ini")
 	}
 
-	// Search for a valid places.sqlite file among the profiles
 	for _, path := range profilePaths {
 		profilePath := filepath.Join(filepath.Dir(profilesIniPath), path)
 		bookmarksFilePath := filepath.Join(profilePath, "places.sqlite")
