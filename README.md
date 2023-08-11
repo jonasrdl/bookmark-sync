@@ -6,7 +6,9 @@ Bookmark Sync is a command-line tool that allows you to synchronize bookmarks be
 - [Usage](https://github.com/jonasrdl/bookmark-sync/tree/main#usage)
 - [Command-Line Interface](https://github.com/jonasrdl/bookmark-sync/tree/main#command-line-interface)
 - [Syncing Process](https://github.com/jonasrdl/bookmark-sync/tree/main#syncing-process)
+- [Listing Available Profiles](https://github.com/jonasrdl/bookmark-sync#listing-available-profiles)
 - [Contributing](https://github.com/jonasrdl/bookmark-sync/tree/main#contributing)
+
 
 ### Installation
 Bookmark Sync requires Go to be installed on your system. You can download and install Go from the official website: https://golang.org/dl/
