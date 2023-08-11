@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/jonasrdl/bookmark-sync/internal"
 	"github.com/jonasrdl/bookmark-sync/internal/browser/chromium"
@@ -8,6 +9,9 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"os"
+	"os/user"
+	"path/filepath"
+	"strings"
 )
 
 var rootCmd = &cobra.Command{
@@ -24,6 +28,8 @@ var syncCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		from, _ := cmd.Flags().GetString("from")
 		to, _ := cmd.Flags().GetString("to")
+		//sourceProfile, _ := cmd.Flags().GetString("source-profile")
+		//destProfile, _ := cmd.Flags().GetString("dest-profile")
 
 		if from == "" || to == "" {
 			log.Fatal("Both source and destination browsers must be specified")
@@ -33,11 +39,33 @@ var syncCmd = &cobra.Command{
 	},
 }
 
+var listProfilesCmd = &cobra.Command{
+	Use:   "list-profiles",
+	Short: "List available browser profiles",
+	Run: func(cmd *cobra.Command, args []string) {
+		browser, _ := cmd.Flags().GetString("browser")
+
+		switch browser {
+		case "chromium":
+			listChromiumProfiles()
+		case "firefox":
+			listFirefoxProfiles()
+		default:
+			log.Fatal("Invalid browser specified")
+		}
+	},
+}
+
 func init() {
 	syncCmd.Flags().String("from", "", "Source browser (chromium or firefox)")
 	syncCmd.Flags().String("to", "", "Destination browser (chromium or firefox)")
+	syncCmd.Flags().String("source-profile", "", "Source browser profile")
+	syncCmd.Flags().String("dest-profile", "", "Destination browser profile")
+
+	listProfilesCmd.Flags().String("browser", "", "Browser to list profiles (chromium or firefox)")
 
 	rootCmd.AddCommand(syncCmd)
+	rootCmd.AddCommand(listProfilesCmd)
 }
 
 func main() {
@@ -86,4 +114,53 @@ func syncBookmarks(from, to string) {
 		log.Fatal("Error updating destination browser bookmarks", err)
 	}
 	fmt.Println("Bookmarks synced successfully")
+}
+
+func listChromiumProfiles() {
+	fmt.Println("Currently not supported")
+}
+
+func listFirefoxProfiles() {
+	fmt.Println("List of available Firefox profiles:")
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	firefoxDir := filepath.Join(usr.HomeDir, ".mozilla", "firefox")
+	profilesIniPath := filepath.Join(firefoxDir, "profiles.ini")
+
+	profiles, err := readFirefoxProfilesIni(profilesIniPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, profile := range profiles {
+		fmt.Println(profile)
+	}
+}
+
+func readFirefoxProfilesIni(profilesIniPath string) ([]string, error) {
+	file, err := os.Open(profilesIniPath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var profiles []string
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(line, "Path=") {
+			profilePath := strings.TrimPrefix(line, "Path=")
+			profiles = append(profiles, profilePath)
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+
+	return profiles, nil
 }
