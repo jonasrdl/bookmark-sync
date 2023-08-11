@@ -65,7 +65,7 @@ func (f *FirefoxBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
 		return err
 	}
 
-	err = os.WriteFile(bookmarksFilePath, jsonData, 0o644)
+	err = os.WriteFile(bookmarksFilePath, jsonData, 0o600)
 	if err != nil {
 		log.Printf("error writing JSON data to file: %v\n", err)
 		return err
