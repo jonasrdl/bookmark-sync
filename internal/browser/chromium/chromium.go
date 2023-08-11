@@ -3,11 +3,12 @@ package chromium
 import (
 	"encoding/json"
 	"errors"
-	"github.com/jonasrdl/bookmark-sync/internal"
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
+
+	"github.com/jonasrdl/bookmark-sync/internal"
 )
 
 type ChromiumBrowser struct{}
@@ -83,7 +84,7 @@ func (c *ChromiumBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
 		return err
 	}
 
-	err = os.WriteFile(bookmarksFilePath, jsonData, 0644)
+	err = os.WriteFile(bookmarksFilePath, jsonData, 0o644)
 	if err != nil {
 		log.Printf("error writing JSON data to file: %v\n", err)
 		return err

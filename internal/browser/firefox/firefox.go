@@ -5,14 +5,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"github.com/jonasrdl/bookmark-sync/internal"
-	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/jonasrdl/bookmark-sync/internal"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type FirefoxBrowser struct{}
@@ -64,7 +65,7 @@ func (f *FirefoxBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
 		return err
 	}
 
-	err = os.WriteFile(bookmarksFilePath, jsonData, 0644)
+	err = os.WriteFile(bookmarksFilePath, jsonData, 0o644)
 	if err != nil {
 		log.Printf("error writing JSON data to file: %v\n", err)
 		return err

@@ -3,15 +3,16 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/jonasrdl/bookmark-sync/internal"
-	"github.com/jonasrdl/bookmark-sync/internal/browser/chromium"
-	"github.com/jonasrdl/bookmark-sync/internal/browser/firefox"
-	"github.com/spf13/cobra"
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
 	"strings"
+
+	"github.com/jonasrdl/bookmark-sync/internal"
+	"github.com/jonasrdl/bookmark-sync/internal/browser/chromium"
+	"github.com/jonasrdl/bookmark-sync/internal/browser/firefox"
+	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
@@ -28,7 +29,7 @@ var syncCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		from, _ := cmd.Flags().GetString("from")
 		to, _ := cmd.Flags().GetString("to")
-		//sourceProfile, _ := cmd.Flags().GetString("source-profile")
+
 		//destProfile, _ := cmd.Flags().GetString("dest-profile")
 
 		if from == "" || to == "" {
