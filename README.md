@@ -35,6 +35,10 @@ Bookmark Sync CLI supports the following commands:
   - Flags:
     - --from: Source browser (chromium or firefox)
     - --to: Destination browser (chromium or firefox)
+- `list-profiles`: List available profiles for a specific browser. **(Currently only for Firefox)**
+  - Flags:
+    - `--browser`: Browser for which to list profiles (e.g. firefox)
+    
     
   
 ### Syncing Process
@@ -43,6 +47,14 @@ Bookmark Sync reads bookmarks from the source browser and merges them with the b
 2. The destination bookmarks are read from the destination browser.
 3. The bookmarks are merged, and duplicates are eliminated.
 4. The merged bookmarks are written back to the destination browser.
+
+### Listing Available Profiles
+You can use the `list-profiles` command to list available profiles for a specific browser.
+Please note that listing Chromium profiles is **currently** not supported in the current version due to limitations.
+Chromium will follow in the future.
+
+`bookmark-sync list-profiles --browser=firefox`   
+This command will list all available profiles for Firefox browser.
 
 ### Contributing
 Contributions are welcome! If you'd like to contribute to Bookmark Sync, please follow these steps:
