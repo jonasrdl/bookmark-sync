@@ -3,7 +3,6 @@ linters:
     - bodyclose
     - dupl
     - gci
-    - goconst
     - gocritic
     - gocyclo
     - gofumpt
