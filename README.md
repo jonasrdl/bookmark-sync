@@ -26,7 +26,8 @@ Bookmark Sync provides a command-line interface (CLI) that allows you to sync bo
 
 
 `bookmark-sync sync --from=chromium --to=firefox`   
-This command will sync bookmarks from Chromium to Firefox. You can replace chromium and firefox with your desired source and destination browsers.
+This command will sync bookmarks from Chromium to Firefox. You can replace chromium and firefox with your desired source and destination browsers.   
+Currently available browsers are Chromium and Firefox. (More will follow).
 
 ### Command-Line Interface
 Bookmark Sync CLI supports the following commands:
