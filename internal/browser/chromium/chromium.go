@@ -11,9 +11,9 @@ import (
 	"github.com/jonasrdl/bookmark-sync/internal"
 )
 
-type ChromiumBrowser struct{}
+type Browser struct{}
 
-func (c *ChromiumBrowser) GetBookmarksFilepath() (string, error) {
+func (browser *Browser) GetBookmarksFilepath() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err
@@ -26,7 +26,7 @@ func (c *ChromiumBrowser) GetBookmarksFilepath() (string, error) {
 	return bookmarksFilePath, nil
 }
 
-func (c *ChromiumBrowser) ParseJSON(path string) ([]internal.Bookmark, error) {
+func (browser *Browser) ParseJSON(path string) ([]internal.Bookmark, error) {
 	jsonData, err := os.ReadFile(path)
 	if err != nil {
 		log.Printf("error reading json file: %v\n", err)
@@ -49,10 +49,10 @@ func (c *ChromiumBrowser) ParseJSON(path string) ([]internal.Bookmark, error) {
 	return data.Roots.BookmarkBar.Children, nil
 }
 
-func (c *ChromiumBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
-	bookmarksFilePath, _ := c.GetBookmarksFilepath()
+func (browser *Browser) UpdateJSON(bookmarks []internal.Bookmark) error {
+	bookmarksFilePath, _ := browser.GetBookmarksFilepath()
 
-	existingBookmarks, err := c.ParseJSON(bookmarksFilePath)
+	existingBookmarks, err := browser.ParseJSON(bookmarksFilePath)
 	if err != nil {
 		log.Printf("error parsing existing bookmarks: %v\n", err)
 		return err

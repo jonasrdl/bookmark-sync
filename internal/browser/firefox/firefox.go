@@ -13,12 +13,12 @@ import (
 	"time"
 
 	"github.com/jonasrdl/bookmark-sync/internal"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" // Blank import for the sqlite3 package
 )
 
-type FirefoxBrowser struct{}
+type Browser struct{}
 
-func (f *FirefoxBrowser) ParseJSON(path string) ([]internal.Bookmark, error) {
+func (browser *Browser) ParseJSON(path string) ([]internal.Bookmark, error) {
 	bookmarks, err := readBookmarksFromSQLite(path)
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (f *FirefoxBrowser) ParseJSON(path string) ([]internal.Bookmark, error) {
 	return bookmarks, nil
 }
 
-func (f *FirefoxBrowser) GetBookmarksFilepath() (string, error) {
+func (browser *Browser) GetBookmarksFilepath() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err
@@ -46,8 +46,8 @@ func (f *FirefoxBrowser) GetBookmarksFilepath() (string, error) {
 	return bookmarksFilePath, nil
 }
 
-func (f *FirefoxBrowser) UpdateJSON(bookmarks []internal.Bookmark) error {
-	bookmarksFilePath, _ := f.GetBookmarksFilepath()
+func (browser *Browser) UpdateJSON(bookmarks []internal.Bookmark) error {
+	bookmarksFilePath, _ := browser.GetBookmarksFilepath()
 
 	firefoxBm, err := readBookmarksFromSQLite(bookmarksFilePath)
 	if err != nil {
@@ -142,7 +142,19 @@ func readBookmarksFromSQLite(path string) ([]internal.Bookmark, error) {
 	)
 
 	for i := 0; i < attempts; i++ {
-		rows, err = db.Query("SELECT moz_bookmarks.id, moz_places.url, moz_bookmarks.title FROM moz_bookmarks INNER JOIN moz_places ON moz_bookmarks.fk = moz_places.id WHERE moz_bookmarks.type = 1")
+		query := `
+			SELECT
+				moz_bookmarks.id,
+				moz_places.url,
+				moz_bookmarks.title
+			FROM
+				moz_bookmarks
+			INNER JOIN
+				moz_places ON moz_bookmarks.fk = moz_places.id
+			WHERE
+				moz_bookmarks.type = 1
+		`
+		rows, err = db.Query(query)
 		if err == nil {
 			break
 		}

@@ -19,7 +19,10 @@ var rootCmd = &cobra.Command{
 	Use:   "bookmark-sync",
 	Short: "A tool to sync bookmarks between browsers",
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		err := cmd.Help()
+		if err != nil {
+			return
+		}
 	},
 }
 
@@ -29,8 +32,6 @@ var syncCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		from, _ := cmd.Flags().GetString("from")
 		to, _ := cmd.Flags().GetString("to")
-
-		//destProfile, _ := cmd.Flags().GetString("dest-profile")
 
 		if from == "" || to == "" {
 			log.Fatal("Both source and destination browsers must be specified")
@@ -81,18 +82,18 @@ func syncBookmarks(from, to string) {
 
 	switch from {
 	case "chromium":
-		sourceBrowser = &chromium.ChromiumBrowser{}
+		sourceBrowser = &chromium.Browser{}
 	case "firefox":
-		sourceBrowser = &firefox.FirefoxBrowser{}
+		sourceBrowser = &firefox.Browser{}
 	default:
 		log.Fatal("Invalid source browser specified")
 	}
 
 	switch to {
 	case "chromium":
-		destBrowser = &chromium.ChromiumBrowser{}
+		destBrowser = &chromium.Browser{}
 	case "firefox":
-		destBrowser = &firefox.FirefoxBrowser{}
+		destBrowser = &firefox.Browser{}
 	default:
 		log.Fatal("Invalid destination browser specified")
 	}
